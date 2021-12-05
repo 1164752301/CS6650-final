@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/dbms")
-public class Controller {
+public class RelationshipController {
     @Resource
     IGroupService groupService;
 
