@@ -1,4 +1,4 @@
-package org.dbms.relationship.application;
+package org.dbms.application;
 
 
 import org.springframework.boot.SpringApplication;

@@ -2,7 +2,8 @@ package org.dbms.relationship.domain.dto;
 
 import lombok.Data;
 import org.dbms.relationship.domain.dao.entity.GroupEntity;
-import org.dbms.relationship.util.ReflectiveUtil;
+import org.dbms.util.IToEntity;
+import org.dbms.util.ReflectiveUtil;
 
 @Data
 public class AddRelationshipDto extends GroupEntity implements IToEntity {

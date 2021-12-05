@@ -2,10 +2,11 @@ package org.dbms.relationship.domain.dto;
 
 import lombok.Data;
 import org.dbms.relationship.domain.dao.entity.RelationshipEntity;
-import org.dbms.relationship.util.ReflectiveUtil;
+import org.dbms.util.IToEntity;
+import org.dbms.util.ReflectiveUtil;
 
 @Data
-public class ListRelationshipDto extends RelationshipEntity implements IToEntity{
+public class ListRelationshipDto extends RelationshipEntity implements IToEntity {
     private String userName;
 
     @Override

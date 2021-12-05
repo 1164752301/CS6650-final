@@ -1,4 +1,4 @@
-package org.dbms.relationship.domain.dao.entity;
+package org.dbms.message.domain.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;

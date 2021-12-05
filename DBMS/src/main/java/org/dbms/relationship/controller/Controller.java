@@ -6,12 +6,12 @@ import org.dbms.relationship.constant.Constant;
 import org.dbms.relationship.domain.dao.entity.GroupEntity;
 import org.dbms.relationship.domain.dao.entity.RelationshipEntity;
 import org.dbms.relationship.domain.dao.service.IGroupService;
-import org.dbms.relationship.domain.dao.service.IMessageService;
+import org.dbms.message.domain.dao.service.IMessageService;
 import org.dbms.relationship.domain.dao.service.IRelationshipService;
 import org.dbms.relationship.domain.dto.AddRelationshipDto;
 import org.dbms.relationship.domain.dto.ListRelationshipDto;
-import org.dbms.relationship.util.JSONUtil;
-import org.dbms.relationship.util.ReflectiveUtil;
+import org.dbms.util.JSONUtil;
+import org.dbms.util.ReflectiveUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

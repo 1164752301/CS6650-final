@@ -1,4 +1,4 @@
-package org.dbms.relationship.util;
+package org.dbms.util;
 
 
 import cn.hutool.core.bean.BeanUtil;

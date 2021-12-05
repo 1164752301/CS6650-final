@@ -1,4 +1,4 @@
-package org.dbms.relationship.domain.dto;
+package org.dbms.util;
 
 public interface IToEntity {
     public Object toEntity();
