@@ -6,7 +6,6 @@ import org.dbms.relationship.constant.Constant;
 import org.dbms.relationship.domain.dao.entity.GroupEntity;
 import org.dbms.relationship.domain.dao.entity.RelationshipEntity;
 import org.dbms.relationship.domain.dao.service.IGroupService;
-import org.dbms.message.domain.dao.service.IMessageService;
 import org.dbms.relationship.domain.dao.service.IRelationshipService;
 import org.dbms.relationship.domain.dto.AddRelationshipDto;
 import org.dbms.relationship.domain.dto.ListRelationshipDto;
@@ -25,9 +24,6 @@ import java.util.List;
 public class RelationshipController {
     @Resource
     IGroupService groupService;
-
-    @Resource
-    IMessageService messageService;
 
     @Resource
     IRelationshipService relationshipService;
@@ -64,7 +60,12 @@ public class RelationshipController {
     @ResponseBody
     public JSONObject listRelationship(@RequestBody ListRelationshipDto listRelationshipDto) {
         RelationshipEntity relationshipEntity = (RelationshipEntity) listRelationshipDto.toEntity();
-        List<RelationshipEntity> relationshipEntities = relationshipService.listByMap(new HashMap(){{put("user_id", relationshipEntity.getUser_id());}});
+        List<RelationshipEntity> relationshipEntities = relationshipService.listByMap(
+                new HashMap(){
+                    {
+                        put("user_id", relationshipEntity.getUser_id());
+                    }
+                });
         List<GroupEntity> res = new LinkedList<>();
         for (RelationshipEntity entity : relationshipEntities) {
             GroupEntity groupEntity = groupService.getById(entity.getGroup_id());

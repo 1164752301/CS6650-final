@@ -8,4 +8,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MessageServiceImpl extends ServiceImpl<MessageMapper, MessageEntity> implements IMessageService {
+
+    // 增
+    @Override
+    public boolean save(MessageEntity messageEntity) {
+        boolean ret = super.save(messageEntity);
+        System.out.println("add message: " + messageEntity);
+        return ret;
+    }
 }
