@@ -18,7 +18,7 @@ import java.util.Date;
 public class MessageEntity implements IToJSON {
     private Long id;
     private Long group_id;
-    private Long sender_id;
+    private String sender_id;
     private String message;
     private Date create_time;
 

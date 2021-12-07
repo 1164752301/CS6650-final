@@ -16,7 +16,7 @@ public class AddMessageDto extends MessageEntity implements IToEntity {
 
     private Long group_id;
 
-    private Long sender_id;
+    private String sender_id;
 
     private String message;
 
