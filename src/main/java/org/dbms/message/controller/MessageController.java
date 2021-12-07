@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class MessageController {
     @ResponseBody
     public JSONObject addMessage(@RequestBody AddMessageDto addmessageDto) {
         MessageEntity messageEntity = (MessageEntity) addmessageDto.toEntity();
-        messageService.save(messageEntity);
+        messageEntity.setCreate_time(new Date());
 
         messageService.save(MessageEntity.builder()
                         .group_id(addmessageDto.getGroup_id())
