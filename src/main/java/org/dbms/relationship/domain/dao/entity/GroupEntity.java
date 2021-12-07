@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.dbms.util.IToJSON;
 
 import java.sql.Date;
 
@@ -15,7 +16,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("group_info")
-public class GroupEntity implements IToJSON{
+public class GroupEntity implements IToJSON {
     private Long id;
     private String group_name;
     private Integer group_attribute;

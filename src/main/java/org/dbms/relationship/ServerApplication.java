@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan("org.dbms")
-@MapperScan("org.dbms.relationship.domain.dao.mapper")
+@MapperScan({"org.dbms.relationship.domain.dao.mapper", "org.dbms.message.domain.dao.mapper"})
 public class ServerApplication {
 
     public static void main(String[] args) {

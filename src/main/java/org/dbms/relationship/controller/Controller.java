@@ -6,12 +6,10 @@ import org.dbms.relationship.constant.Constant;
 import org.dbms.relationship.domain.dao.entity.GroupEntity;
 import org.dbms.relationship.domain.dao.entity.RelationshipEntity;
 import org.dbms.relationship.domain.dao.service.IGroupService;
-import org.dbms.relationship.domain.dao.service.IMessageService;
 import org.dbms.relationship.domain.dao.service.IRelationshipService;
 import org.dbms.relationship.domain.dto.AddRelationshipDto;
 import org.dbms.relationship.domain.dto.ListRelationshipDto;
-import org.dbms.relationship.util.JSONUtil;
-import org.dbms.relationship.util.ReflectiveUtil;
+import org.dbms.util.JSONUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,9 +23,6 @@ public class Controller {
     IGroupService groupService;
 
     @Resource
-    IMessageService messageService;
-
-    @Resource
     IRelationshipService relationshipService;
 
     @PostMapping("/relationship/add")
@@ -39,10 +34,9 @@ public class Controller {
         addRelationshipDto.setLast_update(new Date(System.currentTimeMillis()));
         GroupEntity groupEntity = (GroupEntity) addRelationshipDto.toEntity();
         groupService.save(groupEntity);
-        if (addRelationshipDto.getGroup_attribute().equals(Constant.group_attribute_single)) {
-            relationshipService.save(RelationshipEntity.builder().group_id(groupEntity.getId()).user_id(addRelationshipDto.getOtherId()).build());
+        for (String userId : addRelationshipDto.getUserList()) {
+            relationshipService.save(RelationshipEntity.builder().group_id(groupEntity.getId()).user_id(userId).build());
         }
-        relationshipService.save(RelationshipEntity.builder().group_id(groupEntity.getId()).user_id(addRelationshipDto.getSelfId()).build());
         return JSONUtil.success(new JSONObject());
     }
 

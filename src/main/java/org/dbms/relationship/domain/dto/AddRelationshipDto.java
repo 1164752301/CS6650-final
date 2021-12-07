@@ -2,12 +2,14 @@ package org.dbms.relationship.domain.dto;
 
 import lombok.Data;
 import org.dbms.relationship.domain.dao.entity.GroupEntity;
-import org.dbms.relationship.util.ReflectiveUtil;
+import org.dbms.util.IToEntity;
+import org.dbms.util.ReflectiveUtil;
+
+import java.util.List;
 
 @Data
 public class AddRelationshipDto extends GroupEntity implements IToEntity {
-    private Long selfId;
-    private Long otherId;
+    private List<String> userList;
 
     @Override
     public Object toEntity() {

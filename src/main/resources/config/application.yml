@@ -1,6 +1,6 @@
 
 swagger:
-  controller: org.dbms.relationship
+  controller: org.dbms
   description: finalWeeChat
   enable: true
   title: final

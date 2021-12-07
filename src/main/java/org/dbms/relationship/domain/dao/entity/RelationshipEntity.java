@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @TableName("relation")
 public class RelationshipEntity {
     private Long id;
-    private Long user_id;
+    private String user_id;
     private Long group_id;
 }
