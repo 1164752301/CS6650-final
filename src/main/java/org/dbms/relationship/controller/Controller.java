@@ -38,7 +38,7 @@ public class Controller {
         addRelationshipDto.setLastUpdate(Timestamp.valueOf(LocalDateTime.now()));
         GroupEntity groupEntity = (GroupEntity) addRelationshipDto.toEntity();
         groupService.save(groupEntity);
-        for (String userId : addRelationshipDto.getUser_list()) {
+        for (String userId : addRelationshipDto.getUserList()) {
             relationshipService.save(RelationshipEntity.builder().groupId(groupEntity.getId()).userId(userId).build());
         }
         return JSONUtil.success(new JSONObject());

@@ -33,11 +33,11 @@ public class GroupEntity implements IToJSON {
     public JSONObject toJSON() {
         JSONObject res = new JSONObject();
         res.put("id", id);
-        res.put("group_name", groupName);
-        res.put("group_attribute", groupAttribute);
-        res.put("member1_name", aName);
-        res.put("member2_name", bName);
-        res.put("last_update", lastUpdate);
+        res.put("groupName", groupName);
+        res.put("groupAttribute", groupAttribute);
+        res.put("aName", aName);
+        res.put("bName", bName);
+        res.put("lastUpdate", lastUpdate);
         return res;
     }
 }

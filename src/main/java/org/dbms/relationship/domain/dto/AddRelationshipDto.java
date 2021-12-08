@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 public class AddRelationshipDto extends GroupEntity implements IToEntity {
-    private List<String> user_list;
+    private List<String> userList;
 
     @Override
     public Object toEntity() {
