@@ -7,7 +7,7 @@ import org.dbms.util.ReflectiveUtil;
 
 @Data
 public class ListRelationshipDto extends RelationshipEntity implements IToEntity {
-    private String userName;
+    private String user_name;
 
     @Override
     public Object toEntity() {
