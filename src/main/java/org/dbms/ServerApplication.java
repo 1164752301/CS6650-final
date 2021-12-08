@@ -1,4 +1,4 @@
-package org.dbms.relationship;
+package org.dbms;
 
 
 import org.mybatis.spring.annotation.MapperScan;

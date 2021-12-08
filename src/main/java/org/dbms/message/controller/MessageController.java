@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/dbms/message")
@@ -24,13 +25,13 @@ public class MessageController {
     @ResponseBody
     public JSONObject addMessage(@RequestBody AddMessageDto addmessageDto) {
         MessageEntity messageEntity = (MessageEntity) addmessageDto.toEntity();
-        messageEntity.setCreate_time(new Date());
+        messageEntity.setCreateTime(new Date());
 
         messageService.save(MessageEntity.builder()
-                        .group_id(addmessageDto.getGroup_id())
-                        .sender_id(addmessageDto.getSender_id())
+                        .groupId(addmessageDto.getGroup_id())
+                        .senderId(addmessageDto.getSender_id())
                         .message(addmessageDto.getMessage())
-                        .create_time(addmessageDto.getCreate_time())
+                        .createTime(addmessageDto.getCreate_time())
                 .build());
 
         return JSONUtil.success(new JSONObject());
@@ -40,19 +41,23 @@ public class MessageController {
     @PostMapping("/list")
     @ResponseBody
     public JSONObject listMessage(@RequestBody Long groupId) {
+        System.out.println("Received list message request with groupId: " + groupId);
         List<MessageEntity> messageEntityList = messageService.list();
 
         List<MessageEntity> res = new ArrayList<>();
 
         for (MessageEntity messageEntity : messageEntityList) {
-            if (messageEntity.getGroup_id().equals(groupId)) {
+            Long currGroupId = messageEntity.getGroupId();
+            if (currGroupId == groupId) {
                 res.add(messageEntity);
             }
         }
 
+        System.out.println(res.size());
+
         res.sort((o1, o2) ->
-                o1.getCreate_time().before(o2.getCreate_time())?1:
-                o1.getCreate_time().equals(o2.getCreate_time())? 0:-1);
+                o1.getCreateTime().before(o2.getCreateTime())?1:
+                o1.getCreateTime().equals(o2.getCreateTime())? 0:-1);
 
         JSONObject result = new JSONObject();
         JSONArray data = new JSONArray();
