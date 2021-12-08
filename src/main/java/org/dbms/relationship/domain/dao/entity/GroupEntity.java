@@ -1,6 +1,7 @@
 package org.dbms.relationship.domain.dao.entity;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 import org.dbms.util.IToJSON;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -17,23 +20,24 @@ import java.sql.Date;
 @AllArgsConstructor
 @TableName("group_info")
 public class GroupEntity implements IToJSON {
+    @TableId
     private Long id;
-    private String group_name;
-    private Integer group_attribute;
-    private String member1_name;
-    private String member2_name;
-    private Date last_update;
+    private String groupName;
+    private Integer groupAttribute;
+    private String aName;
+    private String bName;
+    private Timestamp lastUpdate;
 
 
     @Override
     public JSONObject toJSON() {
         JSONObject res = new JSONObject();
         res.put("id", id);
-        res.put("group_name", group_name);
-        res.put("group_attribute", group_attribute);
-        res.put("member1_name", member1_name);
-        res.put("member2_name", member2_name);
-        res.put("last_update", last_update);
+        res.put("group_name", groupName);
+        res.put("group_attribute", groupAttribute);
+        res.put("member1_name", aName);
+        res.put("member2_name", bName);
+        res.put("last_update", lastUpdate);
         return res;
     }
 }

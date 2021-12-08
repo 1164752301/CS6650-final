@@ -1,5 +1,6 @@
 package org.dbms.relationship.domain.dao.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +14,6 @@ import lombok.NoArgsConstructor;
 @TableName("relation")
 public class RelationshipEntity {
     private Long id;
-    private String user_id;
-    private Long group_id;
+    private String userId;
+    private Long groupId;
 }

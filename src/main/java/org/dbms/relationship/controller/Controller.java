@@ -2,6 +2,7 @@ package org.dbms.relationship.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.dbms.relationship.constant.Constant;
 import org.dbms.relationship.domain.dao.entity.GroupEntity;
 import org.dbms.relationship.domain.dao.entity.RelationshipEntity;
@@ -10,10 +11,13 @@ import org.dbms.relationship.domain.dao.service.IRelationshipService;
 import org.dbms.relationship.domain.dto.AddRelationshipDto;
 import org.dbms.relationship.domain.dto.ListRelationshipDto;
 import org.dbms.util.JSONUtil;
+import org.dbms.util.ReflectiveUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -28,14 +32,14 @@ public class Controller {
     @PostMapping("/relationship/add")
     @ResponseBody
     public JSONObject addRelationship(@RequestBody AddRelationshipDto addRelationshipDto) {
-        if (Objects.isNull(addRelationshipDto.getGroup_attribute())) {
-            addRelationshipDto.setGroup_attribute(Constant.group_attribute_multiple);
+        if (Objects.isNull(addRelationshipDto.getGroupAttribute())) {
+            addRelationshipDto.setGroupAttribute(Constant.group_attribute_multiple);
         }
-        addRelationshipDto.setLast_update(new Date(System.currentTimeMillis()));
+        addRelationshipDto.setLastUpdate(Timestamp.valueOf(LocalDateTime.now()));
         GroupEntity groupEntity = (GroupEntity) addRelationshipDto.toEntity();
         groupService.save(groupEntity);
-        for (String userId : addRelationshipDto.getUserList()) {
-            relationshipService.save(RelationshipEntity.builder().group_id(groupEntity.getId()).user_id(userId).build());
+        for (String userId : addRelationshipDto.getUser_list()) {
+            relationshipService.save(RelationshipEntity.builder().groupId(groupEntity.getId()).userId(userId).build());
         }
         return JSONUtil.success(new JSONObject());
     }
@@ -58,18 +62,21 @@ public class Controller {
     @ResponseBody
     public JSONObject listRelationship(@RequestBody ListRelationshipDto listRelationshipDto) {
         RelationshipEntity relationshipEntity = (RelationshipEntity) listRelationshipDto.toEntity();
-        List<RelationshipEntity> relationshipEntities = relationshipService.listByMap(new HashMap(){{put("user_id", relationshipEntity.getUser_id());}});
+        List<RelationshipEntity> relationshipEntities = relationshipService.list(new QueryWrapper<RelationshipEntity>().allEq(ReflectiveUtil.object2Map(listRelationshipDto), false));
+        relationshipEntities = relationshipService.list();
+    System.out.println(relationshipEntities);
         List<GroupEntity> res = new LinkedList<>();
         for (RelationshipEntity entity : relationshipEntities) {
-            GroupEntity groupEntity = groupService.getById(entity.getGroup_id());
-            if (groupEntity.getGroup_attribute().equals(Constant.group_attribute_single)) {
-                String name1 = groupEntity.getMember1_name();
-                String name2 = groupEntity.getMember2_name();
-                groupEntity.setGroup_name(name1.equals(listRelationshipDto.getUserName())?name2:name1);
-            }
+            GroupEntity groupEntity = groupService.getOne(new QueryWrapper<GroupEntity>().eq("id", entity.getGroupId()));
+      //            if (groupEntity.getGroup_attribute().equals(Constant.group_attribute_single)) {
+      //                String name1 = groupEntity.getMember1_name();
+      //                String name2 = groupEntity.getMember2_name();
+      //
+      // groupEntity.setGroup_name(name1.equals(listRelationshipDto.getUser_name())?name2:name1);
+      //            }
             res.add(groupEntity);
         }
-        res.sort((o1, o2) -> o1.getLast_update().before(o2.getLast_update())?-1:1);
+        res.sort((o1, o2) -> o1.getLastUpdate().before(o2.getLastUpdate())?-1:1);
         JSONObject result = new JSONObject();
         JSONArray datas = new JSONArray();
         for (GroupEntity groupEntity : res) {
