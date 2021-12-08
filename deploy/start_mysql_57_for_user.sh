@@ -1,6 +1,5 @@
-# 启动一个自测调试用数据库
+
 set -x
-# 目录
 currdir=$(cd $(dirname $0); pwd);
 
 docker_name="$1"
@@ -14,7 +13,6 @@ then
   docker rm -f ${docker_name}
 fi
 
-## 默认L1测试mysql端口35005
 docker run -p $2:3306 \
 --name="${docker_name}" \
 --platform="linux/amd64" \

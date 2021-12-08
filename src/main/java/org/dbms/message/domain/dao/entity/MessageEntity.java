@@ -17,20 +17,20 @@ import java.util.Date;
 @TableName("message")
 public class MessageEntity implements IToJSON {
     private Long id;
-    private Long group_id;
-    private String sender_id;
+    private Long groupId;
+    private String senderId;
     private String message;
-    private Date create_time;
+    private Date createTime;
 
 
     @Override
     public JSONObject toJSON() {
         JSONObject res = new JSONObject();
         res.put("id", id);
-        res.put("group_id", group_id);
-        res.put("sender_id", sender_id);
+        res.put("groupId", groupId);
+        res.put("senderId", senderId);
         res.put("message", message);
-        res.put("create_time", create_time);
+        res.put("createTime", createTime);
         return res;
     }
 }

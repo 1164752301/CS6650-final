@@ -1,4 +1,4 @@
-package org.dbms.relationship;
+package org.dbms;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;

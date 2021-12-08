@@ -13,6 +13,7 @@
     <bytecodeTargetLevel>
       <module name="DBMS" target="8" />
       <module name="final (1)" target="8" />
+      <module name="final-dbms" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
