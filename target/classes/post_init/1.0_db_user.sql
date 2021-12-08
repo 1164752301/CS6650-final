@@ -23,7 +23,7 @@ create table message
     id bigint auto_increment
         primary key,
     group_id bigint not null,
-    sender_id bigint not null,
+    sender_id varchar(255) not null,
     message varchar(255) null,
     create_time date null
 );
@@ -32,7 +32,8 @@ create table relation
 (
     id bigint auto_increment
         primary key,
-    user_id bigint not null,
+    user_id varchar(255) not null,
     group_id bigint not null
 );
+
 
