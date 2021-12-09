@@ -15,7 +15,6 @@ import org.dbms.util.ReflectiveUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -63,7 +62,6 @@ public class Controller {
     public JSONObject listRelationship(@RequestBody ListRelationshipDto listRelationshipDto) {
         RelationshipEntity relationshipEntity = (RelationshipEntity) listRelationshipDto.toEntity();
         List<RelationshipEntity> relationshipEntities = relationshipService.list(new QueryWrapper<RelationshipEntity>().allEq(ReflectiveUtil.object2Map(listRelationshipDto), false));
-        relationshipEntities = relationshipService.list();
     System.out.println(relationshipEntities);
         List<GroupEntity> res = new LinkedList<>();
         for (RelationshipEntity entity : relationshipEntities) {

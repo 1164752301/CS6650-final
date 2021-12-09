@@ -1,4 +1,3 @@
-
 set -x
 currdir=$(cd $(dirname $0); pwd);
 
