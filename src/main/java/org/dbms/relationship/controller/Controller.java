@@ -21,6 +21,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/dbms")
+@CrossOrigin(origins = "*")
 public class Controller {
     @Resource
     IGroupService groupService;
@@ -61,17 +62,11 @@ public class Controller {
     @ResponseBody
     public JSONObject listRelationship(@RequestBody ListRelationshipDto listRelationshipDto) {
         RelationshipEntity relationshipEntity = (RelationshipEntity) listRelationshipDto.toEntity();
-        List<RelationshipEntity> relationshipEntities = relationshipService.list(new QueryWrapper<RelationshipEntity>().allEq(ReflectiveUtil.object2Map(listRelationshipDto), false));
+        List<RelationshipEntity> relationshipEntities = relationshipService.list(new QueryWrapper<RelationshipEntity>().eq("user_id", relationshipEntity.getUserId()));
     System.out.println(relationshipEntities);
         List<GroupEntity> res = new LinkedList<>();
         for (RelationshipEntity entity : relationshipEntities) {
             GroupEntity groupEntity = groupService.getOne(new QueryWrapper<GroupEntity>().eq("id", entity.getGroupId()));
-      //            if (groupEntity.getGroup_attribute().equals(Constant.group_attribute_single)) {
-      //                String name1 = groupEntity.getMember1_name();
-      //                String name2 = groupEntity.getMember2_name();
-      //
-      // groupEntity.setGroup_name(name1.equals(listRelationshipDto.getUser_name())?name2:name1);
-      //            }
             res.add(groupEntity);
         }
         res.sort((o1, o2) -> o1.getLastUpdate().before(o2.getLastUpdate())?-1:1);

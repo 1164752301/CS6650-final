@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/dbms/message")
 public class MessageController {
@@ -25,6 +26,7 @@ public class MessageController {
     @PostMapping("/add")
     @ResponseBody
     public JSONObject addMessage(@RequestBody AddMessageDto addmessageDto) throws IOException {
+        System.out.println("received add message: " + addmessageDto.toString());
         MessageEntity messageEntity = (MessageEntity) addmessageDto.toEntity();
         messageEntity.setCreateTime(new Date());
 
@@ -47,20 +49,21 @@ public class MessageController {
 
     @PostMapping("/list")
     @ResponseBody
-    public JSONObject listMessage(@RequestBody Long groupId) {
-        System.out.println("Received list message request with groupId: " + groupId);
+    public JSONObject listMessage(@RequestBody JSONObject chatRoomId) {
+        Long id = Long.parseLong(chatRoomId.getString("chatRoomId"));
+        System.out.println("Received list message request with groupId: " + chatRoomId);
         List<MessageEntity> messageEntityList = messageService.list();
 
         List<MessageEntity> res = new ArrayList<>();
 
         for (MessageEntity messageEntity : messageEntityList) {
             Long currGroupId = messageEntity.getGroupId();
-            if (currGroupId == groupId) {
+            if (currGroupId == id) {
                 res.add(messageEntity);
             }
         }
 
-        System.out.println(res.size());
+        System.out.println("list mesaage size" + res.size());
 
         res.sort((o1, o2) ->
                 o1.getCreateTime().before(o2.getCreateTime())?1:
@@ -72,6 +75,7 @@ public class MessageController {
             data.add(messageEntity.toJSON());
         }
         result.put("datas", data);
+        System.out.println("list message / send to front end: " + result);
         return JSONUtil.success(result);
 
     }

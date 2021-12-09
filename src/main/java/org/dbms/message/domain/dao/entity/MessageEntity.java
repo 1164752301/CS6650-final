@@ -28,9 +28,9 @@ public class MessageEntity implements IToJSON {
         JSONObject res = new JSONObject();
         res.put("id", id);
         res.put("groupId", groupId);
-        res.put("senderId", senderId);
+        res.put("UserID", senderId);
         res.put("message", message);
-        res.put("createTime", createTime);
+        res.put("timestamp", createTime);
         return res;
     }
 }

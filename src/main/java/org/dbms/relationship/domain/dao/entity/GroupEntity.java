@@ -32,8 +32,8 @@ public class GroupEntity implements IToJSON {
     @Override
     public JSONObject toJSON() {
         JSONObject res = new JSONObject();
-        res.put("id", id);
-        res.put("groupName", groupName);
+        res.put("Id", id.toString());
+        res.put("name", groupName);
         res.put("groupAttribute", groupAttribute);
         res.put("aName", aName);
         res.put("bName", bName);

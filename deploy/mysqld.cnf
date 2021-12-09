@@ -55,7 +55,6 @@ log_throttle_queries_not_using_indexes = 0
 #expire_logs_days = 120
 min_examined_row_limit = 100
 ########innodb settings########
-innodb_use_native_aio = 0
 innodb_io_capacity = 4000
 innodb_io_capacity_max = 8000
 innodb_buffer_pool_size = 6144M
