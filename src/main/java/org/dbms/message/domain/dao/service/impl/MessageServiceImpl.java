@@ -12,8 +12,8 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, MessageEntity
     // 增
     @Override
     public boolean save(MessageEntity messageEntity) {
+        System.out.println("adding message: " + messageEntity);
         boolean ret = super.save(messageEntity);
-        System.out.println("add message: " + messageEntity);
         return ret;
     }
 }

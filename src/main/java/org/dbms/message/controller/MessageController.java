@@ -3,6 +3,7 @@ package org.dbms.message.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.dbms.BIOClient;
 import org.dbms.message.domain.dao.entity.MessageEntity;
 import org.dbms.message.domain.dao.service.IMessageService;
 import org.dbms.message.domain.dto.AddMessageDto;
@@ -10,10 +11,10 @@ import org.dbms.util.JSONUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/dbms/message")
@@ -23,16 +24,19 @@ public class MessageController {
 
     @PostMapping("/add")
     @ResponseBody
-    public JSONObject addMessage(@RequestBody AddMessageDto addmessageDto) {
+    public JSONObject addMessage(@RequestBody AddMessageDto addmessageDto) throws IOException {
         MessageEntity messageEntity = (MessageEntity) addmessageDto.toEntity();
         messageEntity.setCreateTime(new Date());
 
         messageService.save(MessageEntity.builder()
-                        .groupId(addmessageDto.getGroup_id())
-                        .senderId(addmessageDto.getSender_id())
+                        .groupId(addmessageDto.getGroupId())
+                        .senderId(addmessageDto.getSenderId())
                         .message(addmessageDto.getMessage())
-                        .createTime(addmessageDto.getCreate_time())
+                        .createTime(messageEntity.getCreateTime())
                 .build());
+
+        BIOClient bioClient = new BIOClient();
+        bioClient.send();
 
         return JSONUtil.success(new JSONObject());
     }

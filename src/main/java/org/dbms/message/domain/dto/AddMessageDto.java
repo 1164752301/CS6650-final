@@ -14,13 +14,13 @@ import java.util.Date;
 @TableName(value = "message", autoResultMap = true)
 public class AddMessageDto extends MessageEntity implements IToEntity {
 
-    private Long group_id;
+    private Long groupId;
 
-    private String sender_id;
+    private String senderId;
 
     private String message;
 
-    private Date create_time;
+    private Date createTime;
 
     @Override
     public Object toEntity() {
