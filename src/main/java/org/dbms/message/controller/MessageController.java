@@ -35,8 +35,11 @@ public class MessageController {
                         .createTime(messageEntity.getCreateTime())
                 .build());
 
+        // convert entity to json string
+        String jsonStr = messageEntity.toJSON().toJSONString() + "\n";
+
         BIOClient bioClient = new BIOClient();
-        bioClient.send();
+        bioClient.send(jsonStr);
 
         return JSONUtil.success(new JSONObject());
     }

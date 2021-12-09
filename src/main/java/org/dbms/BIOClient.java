@@ -11,15 +11,14 @@ public class BIOClient {
     public BIOClient() {
     }
 
-    public void send() throws IOException {
-        System.out.println("starting to send to mq");
-        Socket s = new Socket("localhost", 1234);
+    public void send(String jsonStr) throws IOException {
+        System.out.println("starting to send to mq, msg: " + jsonStr);
+        Socket s = new Socket("localhost", 35000);
 
-        InputStream input = s.getInputStream();
         OutputStream output = s.getOutputStream();
 
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(output));
-        bw.write("Client sends message test to server\n");  //Send a message to the server side
+        bw.write(jsonStr);  //Send a message to the server side
         bw.flush();
         System.out.println("Successfully send to tcp server");
     }
