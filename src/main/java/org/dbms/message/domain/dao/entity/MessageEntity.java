@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.dbms.util.IToJSON;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Data
 @Builder
@@ -20,7 +20,7 @@ public class MessageEntity implements IToJSON {
     private Long groupId;
     private String senderId;
     private String message;
-    private Date createTime;
+    private Timestamp createTime;
 
 
     @Override
