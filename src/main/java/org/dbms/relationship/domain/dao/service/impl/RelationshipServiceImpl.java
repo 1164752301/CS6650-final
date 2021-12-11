@@ -14,8 +14,9 @@ import org.dbms.relationship.domain.dao.service.IGroupService;
 import org.dbms.relationship.domain.dao.service.IRelationshipService;
 import org.dbms.relationship.domain.dto.AddRelationshipDto;
 import org.dbms.relationship.domain.dto.ListRelationshipDto;
-import org.dbms.tools.BIOClient;
+import org.dbms.tools.JmsProducer;
 import org.dbms.util.JSONUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -34,6 +35,9 @@ public class RelationshipServiceImpl extends ServiceImpl<RelationshipMapper, Rel
 
     @Resource
     IMessageService messageService;
+
+    @Autowired
+    JmsProducer jmsProducer;
 
     @Override
     public JSONObject listRelationship(@RequestBody ListRelationshipDto listRelationshipDto) {
@@ -69,7 +73,7 @@ public class RelationshipServiceImpl extends ServiceImpl<RelationshipMapper, Rel
         return JSONUtil.success(new JSONObject());
     }
 
-    // 增
+    // 增 message
     @Override
     public boolean addMessage(MessageEntity messageEntity) throws IOException {
         System.out.println("adding message: " + messageEntity);
@@ -78,9 +82,11 @@ public class RelationshipServiceImpl extends ServiceImpl<RelationshipMapper, Rel
         // convert entity to json string
         String jsonStr = messageEntity.toJSON().toJSONString() + "\n";
 
-        BIOClient bioClient = new BIOClient();
-        bioClient.send(jsonStr);
+        // send to active mq
+        jmsProducer.sendMessage(messageEntity.getGroupId().toString(), jsonStr);
 
-        return ret;
+
+
+        return true;
     }
 }
