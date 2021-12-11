@@ -1,3 +1,11 @@
+create table address
+(
+    ip varchar(64) null,
+    port int null,
+    id bigint auto_increment
+        primary key
+);
+
 create table group_info
 (
     id bigint auto_increment
@@ -6,7 +14,7 @@ create table group_info
     group_attribute int null,
     a_name varchar(64) null,
     b_name varchar(64) null,
-    last_update date null,
+    last_update timestamp null,
     constraint table_name_group_name_uindex
         unique (group_name)
 );
@@ -29,5 +37,4 @@ create table relation
     group_id bigint not null
 );
 
-
-
+insert into address (ip, port, id) VALUES ('localhost', 30001, 1);
