@@ -118,6 +118,30 @@
 
 
     <build>
+            <plugins>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>dockerfile-maven-plugin</artifactId>
+                    <version>1.4.0</version>
+                    <configuration>
+                        <!-- 镜像名称，我使用项目的名称 -->
+                        <repository>${project.name}</repository>
+                        <!-- 镜像标签，我使用项目的版本号 -->
+                        <tag>${project.version}</tag>
+                        <buildArgs>
+                            <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                        </buildArgs>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <!-- 指定main方法入口 -->
+                        <mainClass>org.dbms.ServerApplication</mainClass>
+                    </configuration>
+                </plugin>
+            </plugins>
         <resources>
             <resource>
                 <directory>src/main/java</directory>

@@ -1,7 +1,5 @@
 package org.dbms.util;
 
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -96,20 +94,19 @@ public class CommonUtils {
 
     private static PoolingHttpClientConnectionManager getConnectionManager() {
         PoolingHttpClientConnectionManager cManager = new PoolingHttpClientConnectionManager();
-        cManager.setValidateAfterInactivity(4000);
-        cManager.setDefaultSocketConfig(SocketConfig.custom().setSoTimeout(4000).build());
-        cManager.setValidateAfterInactivity(2000);
+        cManager.setValidateAfterInactivity(1000);
+        cManager.setDefaultSocketConfig(SocketConfig.custom().setSoTimeout(1000).build());
+        cManager.setValidateAfterInactivity(1000);
         return cManager;
     }
 
     private static RequestConfig createRequestConfig() {
         RequestConfig config =
                 RequestConfig.custom()
-                        .setSocketTimeout(6000000)
-                        .setConnectTimeout(6000000)
-                        .setConnectionRequestTimeout(6000000)
+                        .setSocketTimeout(1000)
+                        .setConnectTimeout(1000)
+                        .setConnectionRequestTimeout(1000)
                         .build();
         return config;
     }
-
 }

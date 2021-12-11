@@ -17,7 +17,7 @@ docker run -p $2:3306 \
 --name="${docker_name}" \
 --platform="linux/amd64" \
 --restart=always \
--e MYSQL_ROOT_PASSWORD=${MES_MYSQL_PASSWORD:-Y2h5d9pDa9D} \
+-e MYSQL_ROOT_PASSWORD=Y2h5d9pDa9D \
 -v /Volumes/final/self-test-mysql/data2:/var/lib/mysql --user 1000 \
 -v ${currdir}/init:/docker-entrypoint-initdb.d/ \
 -v ${currdir}/post_init:/opt/sql \
