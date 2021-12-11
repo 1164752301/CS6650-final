@@ -26,7 +26,7 @@ create table message
     group_id bigint not null,
     sender_id varchar(255) not null,
     message varchar(255) null,
-    create_time date null
+    create_time timestamp null
 );
 
 create table relation

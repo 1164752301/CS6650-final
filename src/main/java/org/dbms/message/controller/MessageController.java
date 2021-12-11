@@ -3,6 +3,7 @@ package org.dbms.message.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.dbms.BIOClient;
 import org.dbms.message.domain.dao.entity.MessageEntity;
 import org.dbms.message.domain.dao.service.IMessageService;
 import org.dbms.message.domain.dto.AddMessageDto;
@@ -10,11 +11,12 @@ import org.dbms.util.JSONUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/dbms/message")
 public class MessageController {
@@ -23,16 +25,23 @@ public class MessageController {
 
     @PostMapping("/add")
     @ResponseBody
-    public JSONObject addMessage(@RequestBody AddMessageDto addmessageDto) {
+    public JSONObject addMessage(@RequestBody AddMessageDto addmessageDto) throws IOException {
+        System.out.println("received add message: " + addmessageDto.toString());
         MessageEntity messageEntity = (MessageEntity) addmessageDto.toEntity();
-        messageEntity.setCreateTime(new Date());
+        messageEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
 
         messageService.save(MessageEntity.builder()
-                        .groupId(addmessageDto.getGroup_id())
-                        .senderId(addmessageDto.getSender_id())
+                        .groupId(addmessageDto.getGroupId())
+                        .senderId(addmessageDto.getSenderId())
                         .message(addmessageDto.getMessage())
-                        .createTime(addmessageDto.getCreate_time())
+                        .createTime(messageEntity.getCreateTime())
                 .build());
+
+        // convert entity to json string
+        String jsonStr = messageEntity.toJSON().toJSONString() + "\n";
+
+        BIOClient bioClient = new BIOClient();
+        bioClient.send(jsonStr);
 
         return JSONUtil.success(new JSONObject());
     }
@@ -40,20 +49,21 @@ public class MessageController {
 
     @PostMapping("/list")
     @ResponseBody
-    public JSONObject listMessage(@RequestBody Long groupId) {
-        System.out.println("Received list message request with groupId: " + groupId);
+    public JSONObject listMessage(@RequestBody JSONObject chatRoomId) {
+        Long id = Long.parseLong(chatRoomId.getString("chatRoomId"));
+        System.out.println("Received list message request with groupId: " + chatRoomId);
         List<MessageEntity> messageEntityList = messageService.list();
 
         List<MessageEntity> res = new ArrayList<>();
 
         for (MessageEntity messageEntity : messageEntityList) {
             Long currGroupId = messageEntity.getGroupId();
-            if (currGroupId == groupId) {
+            if (currGroupId == id) {
                 res.add(messageEntity);
             }
         }
 
-        System.out.println(res.size());
+        System.out.println("list mesaage size" + res.size());
 
         res.sort((o1, o2) ->
                 o1.getCreateTime().before(o2.getCreateTime())?1:
@@ -65,6 +75,7 @@ public class MessageController {
             data.add(messageEntity.toJSON());
         }
         result.put("datas", data);
+        System.out.println("list message / send to front end: " + result);
         return JSONUtil.success(result);
 
     }
