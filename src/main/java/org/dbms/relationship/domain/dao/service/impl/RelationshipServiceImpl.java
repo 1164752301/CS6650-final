@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.dbms.message.domain.dao.entity.MessageEntity;
+import org.dbms.message.domain.dao.service.IMessageService;
 import org.dbms.relationship.constant.Constant;
 import org.dbms.relationship.domain.dao.entity.GroupEntity;
 import org.dbms.relationship.domain.dao.entity.RelationshipEntity;
@@ -12,11 +14,13 @@ import org.dbms.relationship.domain.dao.service.IGroupService;
 import org.dbms.relationship.domain.dao.service.IRelationshipService;
 import org.dbms.relationship.domain.dto.AddRelationshipDto;
 import org.dbms.relationship.domain.dto.ListRelationshipDto;
+import org.dbms.tools.BIOClient;
 import org.dbms.util.JSONUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -27,6 +31,9 @@ import java.util.Objects;
 public class RelationshipServiceImpl extends ServiceImpl<RelationshipMapper, RelationshipEntity> implements IRelationshipService {
     @Resource
     IGroupService groupService;
+
+    @Resource
+    IMessageService messageService;
 
     @Override
     public JSONObject listRelationship(@RequestBody ListRelationshipDto listRelationshipDto) {
@@ -60,5 +67,20 @@ public class RelationshipServiceImpl extends ServiceImpl<RelationshipMapper, Rel
             this.save(RelationshipEntity.builder().groupId(groupEntity.getId()).userId(userId).build());
         }
         return JSONUtil.success(new JSONObject());
+    }
+
+    // 增
+    @Override
+    public boolean addMessage(MessageEntity messageEntity) throws IOException {
+        System.out.println("adding message: " + messageEntity);
+        boolean ret = messageService.save(messageEntity);
+
+        // convert entity to json string
+        String jsonStr = messageEntity.toJSON().toJSONString() + "\n";
+
+        BIOClient bioClient = new BIOClient();
+        bioClient.send(jsonStr);
+
+        return ret;
     }
 }

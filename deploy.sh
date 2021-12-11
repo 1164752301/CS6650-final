@@ -22,5 +22,6 @@ docker network create $PROJECT_NETWORK
 
 # build the images from Dockerfile
 echo "----------Building images----------"
-mvn clean package dockerfile:build -DskipTests
+mvn install
+docker build . -t $SERVER_IMAGE
 #docker build -t $CLIENT_IMAGE --target client-build .

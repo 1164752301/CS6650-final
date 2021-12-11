@@ -125,11 +125,12 @@
                     <version>1.4.0</version>
                     <configuration>
                         <!-- 镜像名称，我使用项目的名称 -->
-                        <repository>${project.name}</repository>
+                        <repository>my-server</repository>
                         <!-- 镜像标签，我使用项目的版本号 -->
-                        <tag>${project.version}</tag>
+                        <tag>latest</tag>
+                        <finalName>my-server</finalName>
                         <buildArgs>
-                            <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                            <JAR_FILE>target/final-dbms-1.0-SNAPSHOT.jar</JAR_FILE>
                         </buildArgs>
                     </configuration>
                 </plugin>

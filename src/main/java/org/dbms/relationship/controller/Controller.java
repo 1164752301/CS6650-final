@@ -1,8 +1,11 @@
 package org.dbms.relationship.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.dbms.relationship.domain.dao.service.impl.RelationshipServiceImpl;
+import org.dbms.message.domain.dao.entity.MessageEntity;
+import org.dbms.message.domain.dao.service.IMessageService;
+import org.dbms.message.domain.dto.AddMessageDto;
 import org.dbms.tools.LastValSingleton;
 import org.dbms.tools.PaxosResponse;
 import org.dbms.tools.Proposal;
@@ -23,8 +26,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
 import java.util.*;
 
 @RestController
@@ -248,6 +253,57 @@ public class Controller {
     }
 
 
+/**
+ * ********************** Message *****************
+ */
 
+@Resource
+IMessageService messageService;
+
+    @PostMapping("/message/add")
+    @ResponseBody
+    public JSONObject addMessage(@RequestBody AddMessageDto addmessageDto) throws IOException {
+        System.out.println("received add message: " + addmessageDto.toString());
+        MessageEntity messageEntity = (MessageEntity) addmessageDto.toEntity();
+        messageEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
+
+        prepareAndPropose(new Operation("addMessage", messageEntity));
+
+        return JSONUtil.success(new JSONObject());
+    }
+
+
+    @PostMapping("/message/list")
+    @ResponseBody
+    public JSONObject listMessage(@RequestBody JSONObject chatRoomId) {
+        Long id = Long.parseLong(chatRoomId.getString("chatRoomId"));
+        System.out.println("Received list message request with groupId: " + chatRoomId);
+        List<MessageEntity> messageEntityList = messageService.list();
+
+        List<MessageEntity> res = new ArrayList<>();
+
+        for (MessageEntity messageEntity : messageEntityList) {
+            Long currGroupId = messageEntity.getGroupId();
+            if (currGroupId.equals(id)) {
+                res.add(messageEntity);
+            }
+        }
+
+        System.out.println("list mesaage size" + res.size());
+
+        res.sort((o1, o2) ->
+                o1.getCreateTime().before(o2.getCreateTime())?1:
+                        o1.getCreateTime().equals(o2.getCreateTime())? 0:-1);
+
+        JSONObject result = new JSONObject();
+        JSONArray data = new JSONArray();
+        for (MessageEntity messageEntity : res) {
+            data.add(messageEntity.toJSON());
+        }
+        result.put("datas", data);
+        System.out.println("list message / send to front end: " + result);
+        return JSONUtil.success(result);
+
+    }
 
 }

@@ -38,3 +38,8 @@ create table relation
 );
 
 insert into address (ip, port, id) VALUES ('localhost', 30001, 1);
+insert into address (ip, port, id) VALUES ('localhost', 30002, 2);
+insert into address (ip, port, id) VALUES ('localhost', 30003, 3);
+insert into address (ip, port, id) VALUES ('localhost', 30004, 4);
+insert into address (ip, port, id) VALUES ('localhost', 30005, 5);
+
