@@ -37,10 +37,6 @@ create table if not exists relation
     group_id bigint       not null
 );
 
-
-
-
-
 insert into address (ip, port, id) VALUES ('localhost', 30001, 1);
 insert into address (ip, port, id) VALUES ('localhost', 30002, 2);
 insert into address (ip, port, id) VALUES ('localhost', 30003, 3);
