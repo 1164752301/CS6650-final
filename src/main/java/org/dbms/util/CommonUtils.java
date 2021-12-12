@@ -86,18 +86,18 @@ public class CommonUtils {
 
     private static PoolingHttpClientConnectionManager getConnectionManager() {
         PoolingHttpClientConnectionManager cManager = new PoolingHttpClientConnectionManager();
-        cManager.setValidateAfterInactivity(5000);
-        cManager.setDefaultSocketConfig(SocketConfig.custom().setSoTimeout(5000).build());
-        cManager.setValidateAfterInactivity(5000);
+        cManager.setValidateAfterInactivity(2000);
+        cManager.setDefaultSocketConfig(SocketConfig.custom().setSoTimeout(2000).build());
+        cManager.setValidateAfterInactivity(2000);
         return cManager;
     }
 
     private static RequestConfig createRequestConfig() {
         RequestConfig config =
                 RequestConfig.custom()
-                        .setSocketTimeout(5000)
-                        .setConnectTimeout(5000)
-                        .setConnectionRequestTimeout(5000)
+                        .setSocketTimeout(2000)
+                        .setConnectTimeout(2000)
+                        .setConnectionRequestTimeout(2000)
                         .build();
         return config;
     }
