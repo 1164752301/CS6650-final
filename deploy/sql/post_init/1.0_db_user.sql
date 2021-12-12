@@ -40,6 +40,4 @@ create table if not exists relation
 insert into address (ip, port, id) VALUES ('server1', 30001, 1);
 insert into address (ip, port, id) VALUES ('server2', 30001, 2);
 insert into address (ip, port, id) VALUES ('server3', 30001, 3);
-insert into address (ip, port, id) VALUES ('server4', 30001, 4);
-insert into address (ip, port, id) VALUES ('server5', 30001, 5);
 
