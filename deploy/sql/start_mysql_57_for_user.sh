@@ -3,7 +3,9 @@ set -x
 currdir=$(cd $(dirname $0); pwd);
 
 docker_name="$1"
+docker_port="$2"
 idata="$3"
+PROJECT_NETWORK='final-network'
 
 rm -rf /Volumes/final/self-test-mysql/${idata};
 mkdir -p /Volumes/final/self-test-mysql/${idata};
@@ -18,6 +20,7 @@ docker run -p $2:3306 \
 --name="${docker_name}" \
 --platform="linux/amd64" \
 --restart=always \
+--network $PROJECT_NETWORK \
 -e MYSQL_ROOT_PASSWORD=Y2h5d9pDa9D \
 -v /Volumes/final/self-test-mysql/${idata}:/var/lib/mysql --user 1000 \
 -v ${currdir}/init:/docker-entrypoint-initdb.d/ \

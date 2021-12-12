@@ -11,7 +11,7 @@ import javax.jms.ConnectionFactory;
 @Configuration
 public class ActiveMQConfig {
 
-    private String brokerUrl = "tcp://localhost:61616";
+    private String brokerUrl = "tcp://" + System.getenv("MQ_IP") + ":61616";
 
     @Bean
     public ConnectionFactory connectionFactory(){

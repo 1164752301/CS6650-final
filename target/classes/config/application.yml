@@ -13,7 +13,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${FINAL_MYSQL_IP:localhost}:${FINAL_MYSQL_PORT:8001}/final?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://${FINAL_MYSQL_IP}:${FINAL_MYSQL_PORT}/final?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC&useSSL=false
     username: root
     password: ${FINAL_MYSQL_PASSWORD:Y2h5d9pDa9D}
     type: com.alibaba.druid.pool.DruidDataSource

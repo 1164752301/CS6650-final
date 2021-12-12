@@ -1,1 +1,14 @@
-docker run --platform="linux/amd64" -p 61616:61616 -p 61613:61613 -p 8161:8161 --name mq_container --network weechat_network -i rmohr/activemq
+docker pull rmohr/activemq
+PROJECT_NETWORK="final-network"
+mq_docker_name="$1"
+mq_port="$2"
+
+if [ 1 -eq $(docker ps -a | grep ${mq_docker_name} | wc -l) ];
+then
+  docker rm -f ${mq_docker_name}
+fi
+docker run --platform="linux/amd64" \
+--name $1 \
+-p $2:61616 \
+--network $PROJECT_NETWORK \
+-d -i rmohr/activemq

@@ -1,5 +1,7 @@
 /Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/tools/Proposal.java
+/Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/tools/JmsProducer.java
 /Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/message/domain/dao/service/impl/MessageServiceImpl.java
+/Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/tools/ActiveMQConfig.java
 /Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/tools/ReflectionUtil.java
 /Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/relationship/domain/dao/service/IGroupService.java
 /Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/relationship/domain/dao/service/IAddressService.java
@@ -31,7 +33,6 @@
 /Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/message/controller/MessageController.java
 /Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/message/domain/dao/mapper/MessageMapper.java
 /Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/relationship/domain/dao/service/impl/RelationshipServiceImpl.java
-/Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/tools/BIOClient.java
 /Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/util/IToEntity.java
 /Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/util/CommonUtils.java
 /Users/tyt/Documents/align/CS6650/final/src/main/java/org/dbms/relationship/domain/dao/service/impl/GroupServiceImpl.java

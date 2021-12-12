@@ -11,7 +11,6 @@ org/dbms/relationship/domain/dao/service/IGroupService.class
 org/dbms/message/domain/dao/service/IMessageService.class
 org/dbms/tools/ReflectionUtil.class
 org/dbms/message/domain/dao/entity/MessageEntity.class
-org/dbms/tools/BIOClient.class
 org/dbms/util/IToEntity.class
 org/dbms/relationship/domain/dao/entity/GroupEntity.class
 org/dbms/util/CommonUtils.class

@@ -23,6 +23,7 @@ import org.dbms.util.CommonUtils;
 import org.dbms.util.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -103,8 +104,7 @@ public class Controller {
                 String url = String.format("http://%s:%s/dbms/paxos/promise", accepter.getIp(), accepter.getPort());
                     String result = CommonUtils.postCommon(url, null, finalId.toString(), null);
                     JSONObject resObj = JSON.parseObject(result);
-
-                    if (resObj.getLong("id") > id) {
+                    if (Objects.isNull(resObj) || resObj.getLong("id") > id) {
                         continue;
                     }
                     Operation operation1 = resObj.getObject("value", Operation.class);
@@ -150,17 +150,20 @@ public class Controller {
       obj.put("opertion", opeObj);
       String result = CommonUtils.postCommon(url, null, obj.toJSONString(), null);
       Boolean res = Boolean.parseBoolean(result);
+      if (Objects.isNull(res)) {
+          continue;
+      }
       if (res) {
         count += 1;
       }
+    }
       if (count >= addressEntities.size() / 2) {
           logger.info(String.format("Proposal %s is accepted", id));
-        broadcast(operation);
+          broadcast(operation);
       } else {
           logger.info(String.format("Proposal %s is rejected, retrying.", id));
-        prepareAndPropose(operation);
+          prepareAndPropose(operation);
       }
-    }
         }
 
     private void broadcast(Operation operation) {

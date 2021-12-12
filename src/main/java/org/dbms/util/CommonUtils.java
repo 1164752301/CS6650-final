@@ -78,34 +78,26 @@ public class CommonUtils {
                     logger.error(
                             String.format("fail：%s，code：%d，cause：%s", url, statusCode, result == null ? "" : result));
                 }
-            } catch (ClientProtocolException ex) {
-                logger.error(String.format(
-                        "exception：%s，cause：%s",
-                        url, org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace(ex)));;
-
-            } catch (IOException ex) {
-                logger.error(
-                        String.format(
-                                "exception：%s，cause：%s",
-                                url, org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace(ex)));
+            } catch (Exception e) {
+                logger.error(String.format("Cannot connect to %s", url));
             }
             return "";
     }
 
     private static PoolingHttpClientConnectionManager getConnectionManager() {
         PoolingHttpClientConnectionManager cManager = new PoolingHttpClientConnectionManager();
-        cManager.setValidateAfterInactivity(1000);
-        cManager.setDefaultSocketConfig(SocketConfig.custom().setSoTimeout(1000).build());
-        cManager.setValidateAfterInactivity(1000);
+        cManager.setValidateAfterInactivity(5000);
+        cManager.setDefaultSocketConfig(SocketConfig.custom().setSoTimeout(5000).build());
+        cManager.setValidateAfterInactivity(5000);
         return cManager;
     }
 
     private static RequestConfig createRequestConfig() {
         RequestConfig config =
                 RequestConfig.custom()
-                        .setSocketTimeout(1000)
-                        .setConnectTimeout(1000)
-                        .setConnectionRequestTimeout(1000)
+                        .setSocketTimeout(5000)
+                        .setConnectTimeout(5000)
+                        .setConnectionRequestTimeout(5000)
                         .build();
         return config;
     }

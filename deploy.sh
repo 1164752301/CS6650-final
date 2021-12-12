@@ -22,6 +22,6 @@ docker network create $PROJECT_NETWORK
 
 # build the images from Dockerfile
 echo "----------Building images----------"
-mvn install
+mvn install -Dmaven.test.skip=true
 docker build . -t $SERVER_IMAGE
 #docker build -t $CLIENT_IMAGE --target client-build .
