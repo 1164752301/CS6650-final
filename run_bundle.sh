@@ -1,7 +1,7 @@
 SERVER_IMAGE='final-server-image'
 PROJECT_NETWORK='final-network'
 
-if [ $# -ne 7 ]
+if [ $# -ne 6 ]
 then
   echo "Usage: ./run_server.sh <server_docker_name> <server_port> <mysql_docker_name> <mysql_port> <mysql_mount_directory> <mq_docker_name>"
   exit
@@ -21,9 +21,6 @@ then
 fi
 
 deploy/sql/start_mysql_57_for_user.sh $3 $4 $5
-./launch_activemq.sh $6 $7
-
-
 
 # run client docker container with cmd args
 docker run -it --rm -p $2:30001 \

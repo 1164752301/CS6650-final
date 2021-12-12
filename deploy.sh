@@ -3,6 +3,7 @@ SERVER_IMAGE='final-server-image'
 SERVER_CONTAINER='my-server'
 CLIENT_IMAGE='final-client-image'
 CLIENT_CONTAINER='my-client'
+mq_docker_name='final-mq'
 
 # clean up existing resources, if any
 echo "----------Cleaning up existing resources----------"
@@ -24,4 +25,6 @@ docker network create $PROJECT_NETWORK
 echo "----------Building images----------"
 mvn install -Dmaven.test.skip=true
 docker build . -t $SERVER_IMAGE
+
+./launch_activemq.sh
 #docker build -t $CLIENT_IMAGE --target client-build .
